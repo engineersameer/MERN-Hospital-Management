@@ -1,19 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: fullstack-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: my-app
+      app: fullstack-app
   template:
     metadata:
       labels:
-        app: my-app
+        app: fullstack-app
     spec:
       containers:
-      - name: my-app
-        image: <your-dockerhub-username>/my-app:latest
+      - name: backend
+        image: backend-app:latest
+        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 3000  # Change to your app’s port
+        - containerPort: 5000
+      - name: frontend
+        image: frontend-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
